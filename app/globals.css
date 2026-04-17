@@ -259,9 +259,18 @@ body {
    column of row pairs, each pair `h-full shrink-0`, so only one row
    is visible at a time. Scroll-snap pages cleanly between rows. */
 .work-grid {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+@media (min-width: 768px) {
+  .work-grid {
+    scroll-snap-type: y mandatory;
+  }
 }
 
 .work-grid > li {
@@ -700,6 +709,39 @@ body {
 /* Budget step — index | title | hint | arrow */
 .brief-option--compact {
   grid-template-columns: auto minmax(190px, auto) minmax(0, 1fr) 16px;
+}
+
+@media (max-width: 767px) {
+  .brief-option--compact {
+    grid-template-columns: auto minmax(0, 1fr) 16px;
+    grid-template-areas:
+      "index title arrow"
+      "index desc  desc";
+    row-gap: 0.45rem;
+    column-gap: 0.8rem;
+    padding: 0.92rem 1rem;
+  }
+
+  .brief-option--compact .brief-option__index {
+    grid-area: index;
+  }
+
+  .brief-option--compact .brief-option__title {
+    grid-area: title;
+    font-size: 14px;
+    line-height: 1.24;
+  }
+
+  .brief-option--compact .brief-option__desc {
+    grid-area: desc;
+    font-size: 11.5px;
+    line-height: 1.4;
+    max-width: none;
+  }
+
+  .brief-option--compact .brief-option__arrow {
+    grid-area: arrow;
+  }
 }
 
 .brief-option:hover,
