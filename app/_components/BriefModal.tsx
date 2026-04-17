@@ -518,11 +518,13 @@ export function BriefModal({
         </div>
 
         {/* ------- Animated step stage ------- */}
-        <div className={`brief-modal__body ${step === 0 ? "brief-modal__body--project" : ""}`}>
+        <div
+          className={`brief-modal__body ${step === 0 ? "brief-modal__body--project" : ""} ${submitted ? "brief-modal__body--submitted" : ""}`}
+        >
           <div
             ref={stageRef}
             key={`step-${step}-${submitted ? "done" : ""}`}
-            className={`brief-modal__stage ${step === 0 ? "brief-modal__stage--project" : ""}`}
+            className={`brief-modal__stage ${step === 0 ? "brief-modal__stage--project" : ""} ${submitted ? "brief-modal__stage--submitted" : ""}`}
           >
             {submitted ? (
               <SubmittedView />

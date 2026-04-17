@@ -442,6 +442,16 @@ body {
   gap: 1.2rem;
 }
 
+.brief-modal__body--submitted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brief-modal__stage--submitted {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   .brief-modal__stage {
     gap: 2rem;
@@ -592,6 +602,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  max-width: 54ch;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
 }
 
 .brief-success__copy {

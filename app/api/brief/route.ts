@@ -8,6 +8,8 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const IS_PROD = process.env.NODE_ENV === "production";
+
 type RawBody = Partial<Record<keyof BriefPayload, unknown>>;
 
 const MAX_LEN: Record<keyof BriefPayload, number> = {
@@ -76,7 +78,9 @@ export async function POST(request: Request) {
 
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.RESEND_TO ?? "hello@clove.studio";
-  const from = process.env.RESEND_FROM ?? "clove briefs <briefs@clove.studio>";
+  const from = process.env.RESEND_FROM ?? (IS_PROD
+    ? "clove briefs <briefs@clove.studio>"
+    : "clove studio <onboarding@resend.dev>");
 
   if (!apiKey) {
     console.error("[brief] RESEND_API_KEY is not set");
@@ -107,8 +111,15 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("[brief] Resend error", error);
+
+      const details = [error.name, error.message].filter(Boolean).join(": ");
       return Response.json(
-        { ok: false, error: "Could not send the brief. Please try again." },
+        {
+          ok: false,
+          error: IS_PROD
+            ? "Could not send the brief. Please try again."
+            : `Could not send the brief. ${details || "Check RESEND_FROM / RESEND_TO and domain verification."}`,
+        },
         { status: 502 },
       );
     }
