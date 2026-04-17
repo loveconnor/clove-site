@@ -352,8 +352,8 @@ body {
 /* Lock panel to a single size so the modal never resizes between steps. */
 @media (min-width: 768px) {
   .brief-modal__panel {
-    height: min(680px, 86svh);
-    max-height: 86svh;
+    height: min(720px, 90svh);
+    max-height: 90svh;
     border-bottom: 1px solid rgba(255, 255, 255, 0.055);
     border-radius: 16px;
   }
@@ -413,6 +413,11 @@ body {
   .brief-modal__body {
     padding: 2rem 2.25rem 2rem;
   }
+
+  .brief-modal__body--project {
+    padding-top: 1.2rem;
+    padding-bottom: 1.1rem;
+  }
 }
 
 .brief-modal__body::-webkit-scrollbar {
@@ -433,9 +438,17 @@ body {
   will-change: transform, opacity;
 }
 
+.brief-modal__stage--project {
+  gap: 1.2rem;
+}
+
 @media (min-width: 768px) {
   .brief-modal__stage {
     gap: 2rem;
+  }
+
+  .brief-modal__stage--project {
+    gap: 1.3rem;
   }
 }
 
@@ -449,6 +462,11 @@ body {
   max-width: 22ch;
 }
 
+.brief-modal__title--project {
+  font-size: clamp(1.68rem, 2.85vw, 2.3rem);
+  max-width: 24ch;
+}
+
 .brief-list {
   display: flex;
   flex-direction: column;
@@ -458,9 +476,17 @@ body {
   margin: 0;
 }
 
+.brief-list--project {
+  gap: 0.38rem;
+}
+
 @media (min-width: 768px) {
   .brief-list {
     gap: 0.55rem;
+  }
+
+  .brief-list--project {
+    gap: 0.34rem;
   }
 }
 
@@ -623,11 +649,16 @@ body {
     gap: 1.5rem;
     padding: 1.1rem 1.75rem;
   }
+
+  .brief-list--project .brief-option {
+    gap: 1.05rem;
+    padding: 0.82rem 1.35rem;
+  }
 }
 
 /* Project step — index | title | description | arrow */
 .brief-option--full {
-  grid-template-columns: auto minmax(140px, auto) minmax(0, 1fr) 16px;
+  grid-template-columns: auto minmax(200px, 320px) minmax(0, 1fr) 16px;
 }
 
 @media (max-width: 767px) {
@@ -686,6 +717,12 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+.brief-list--project .brief-option__index {
+  width: 26px;
+  height: 26px;
+  font-size: 10.5px;
+}
+
 .brief-option__title {
   font-family: var(--font-love-sans), ui-sans-serif, sans-serif;
   font-size: 16px;
@@ -695,9 +732,17 @@ body {
   overflow-wrap: anywhere;
 }
 
+.brief-list--project .brief-option__title {
+  font-size: 15px;
+}
+
 @media (min-width: 768px) {
   .brief-option__title {
     font-size: 17px;
+  }
+
+  .brief-list--project .brief-option__title {
+    font-size: 16px;
   }
 }
 
@@ -709,6 +754,12 @@ body {
   min-width: 0;
   max-width: 60ch;
   transition: color 320ms var(--option-ease);
+}
+
+.brief-list--project .brief-option__desc {
+  font-size: 11.5px;
+  line-height: 1.38;
+  max-width: 66ch;
 }
 
 .brief-option:hover .brief-option__desc,

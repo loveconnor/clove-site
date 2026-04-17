@@ -50,6 +50,12 @@ const PROJECT_TYPES: ProjectType[] = [
       "Highly visual, interaction-heavy sites to showcase case studies, creative work, or digital lookbooks.",
   },
   {
+    id: "retainer",
+    title: "Retained Partnership",
+    description:
+      "Ongoing, fractional design and development for continuous iteration and scaling teams.",
+  },
+  {
     id: "other",
     title: "Other",
     description:
@@ -57,12 +63,51 @@ const PROJECT_TYPES: ProjectType[] = [
   },
 ];
 
-const BUDGETS: BudgetOption[] = [
-  { id: "2.5-5", label: "$2,500 — $5,000", hint: "Landing / single-page" },
-  { id: "5-10", label: "$5,000 — $10,000", hint: "Multi-page marketing site" },
-  { id: "10-20", label: "$10,000 — $20,000", hint: "Custom web app / advanced animations" },
-  { id: "20+", label: "$20,000+", hint: "Large platform or retained partnership" },
-];
+const BUDGETS_BY_PROJECT: Record<string, BudgetOption[]> = {
+  landing: [
+    { id: "landing-tier-1", label: "$2,500 — $4,000", hint: "Standard waitlist or launch page" },
+    { id: "landing-tier-2", label: "$4,000 — $7,000", hint: "Interactive & animation-heavy" },
+    { id: "landing-tier-3", label: "$7,000 — $10,000", hint: "Complex integrations or multi-variant" },
+    { id: "landing-tier-4", label: "$10,000+", hint: "Bespoke 3D / WebGL experiences" },
+  ],
+  
+  marketing: [
+    { id: "marketing-tier-1", label: "$5,000 — $8,000", hint: "Essential pages (1-4 pages)" },
+    { id: "marketing-tier-2", label: "$8,000 — $15,000", hint: "CMS-driven & fully scalable" },
+    { id: "marketing-tier-3", label: "$15,000 — $25,000", hint: "Large-scale / bespoke interactions" },
+    { id: "marketing-tier-4", label: "$25,000+", hint: "Enterprise architecture / multi-region" },
+  ],
+  
+  webapp: [
+    { id: "webapp-tier-1", label: "$10,000 — $15,000", hint: "Core MVP & foundational UX" },
+    { id: "webapp-tier-2", label: "$15,000 — $30,000", hint: "Complex logic & custom dashboards" },
+    { id: "webapp-tier-3", label: "$30,000 — $50,000", hint: "Enterprise scale / heavy API architecture" },
+    { id: "webapp-tier-4", label: "$50,000+", hint: "Multi-quarter engagement & rollout" },
+  ],
+  
+  portfolio: [
+    { id: "portfolio-tier-1", label: "$3,000 — $6,000", hint: "Clean, minimalist gallery" },
+    { id: "portfolio-tier-2", label: "$6,000 — $10,000", hint: "Award-winning interactions" },
+    { id: "portfolio-tier-3", label: "$10,000 — $15,000", hint: "Immersive editorial platform" },
+    { id: "portfolio-tier-4", label: "$15,000+", hint: "Highly experimental / WebGL focused" },
+  ],
+
+  retainer: [
+    { id: "retainer-tier-1", label: "$1,500 — $3,000 / mo", hint: "Maintenance & iterative improvements" },
+    { id: "retainer-tier-2", label: "$3,000 — $5,000 / mo", hint: "Dedicated feature sprints" },
+    { id: "retainer-tier-3", label: "$5,000 — $8,000 / mo", hint: "Fractional engineering support" },
+    { id: "retainer-tier-4", label: "$8,000+ / mo", hint: "Half-time embedded technical partner" },
+  ],
+  
+  other: [
+    { id: "other-tier-1", label: "$2,500 — $5,000", hint: "Small scoped engagement" },
+    { id: "other-tier-2", label: "$5,000 — $10,000", hint: "Standard bespoke project" },
+    { id: "other-tier-3", label: "$10,000 — $20,000", hint: "Advanced custom requirements" },
+    { id: "other-tier-4", label: "$20,000+", hint: "Extensive platform architecture" },
+  ],
+};
+
+const ALL_BUDGETS = Object.values(BUDGETS_BY_PROJECT).flat();
 
 type Step = 0 | 1 | 2;
 
@@ -274,7 +319,10 @@ export function BriefModal({
   // ---- Keyboard: arrow keys + number shortcuts on option steps ----
   useEffect(() => {
     if (!open || submitted || step === 2) return;
-    const options = step === 0 ? PROJECT_TYPES : BUDGETS;
+    const budgetOptions = projectType
+      ? (BUDGETS_BY_PROJECT[projectType] ?? BUDGETS_BY_PROJECT.other)
+      : BUDGETS_BY_PROJECT.other;
+    const options = step === 0 ? PROJECT_TYPES : budgetOptions;
 
     const onKey = (e: KeyboardEvent) => {
       // Don't hijack typing inside inputs.
@@ -311,7 +359,7 @@ export function BriefModal({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, step, focusIdx, submitted]);
+  }, [open, step, focusIdx, submitted, projectType]);
 
   // Reset focus index when step changes (nothing pre-highlighted).
   useEffect(() => {
@@ -320,6 +368,13 @@ export function BriefModal({
 
   const stepMeta = STEP_TITLES[step];
 
+  const currentBudgetOptions = useMemo(() => {
+    if (!projectType) return BUDGETS_BY_PROJECT.other;
+    return BUDGETS_BY_PROJECT[projectType] ?? BUDGETS_BY_PROJECT.other;
+  }, [projectType]);
+
+  const shortcutMax = step === 0 ? PROJECT_TYPES.length : currentBudgetOptions.length;
+
   const selections = useMemo(() => {
     const list: Array<{ key: string; label: string }> = [];
     if (projectType) {
@@ -327,13 +382,14 @@ export function BriefModal({
       if (p) list.push({ key: "type", label: p.title });
     }
     if (budget) {
-      const b = BUDGETS.find((x) => x.id === budget);
+      const b = ALL_BUDGETS.find((x) => x.id === budget);
       if (b) list.push({ key: "budget", label: b.label });
     }
     return list;
   }, [projectType, budget]);
 
   const handleSelectType = (id: string) => {
+    setBudget(null);
     setProjectType(id);
     setDirection(1);
     setStep(1);
@@ -357,7 +413,7 @@ export function BriefModal({
     const selectedType =
       PROJECT_TYPES.find((p) => p.id === projectType)?.title ?? "";
     const selectedBudget =
-      BUDGETS.find((b) => b.id === budget)?.label ?? "";
+      ALL_BUDGETS.find((b) => b.id === budget)?.label ?? "";
 
     setSending(true);
     setSubmitError(null);
@@ -462,8 +518,12 @@ export function BriefModal({
         </div>
 
         {/* ------- Animated step stage ------- */}
-        <div className="brief-modal__body">
-          <div ref={stageRef} key={`step-${step}-${submitted ? "done" : ""}`} className="brief-modal__stage">
+        <div className={`brief-modal__body ${step === 0 ? "brief-modal__body--project" : ""}`}>
+          <div
+            ref={stageRef}
+            key={`step-${step}-${submitted ? "done" : ""}`}
+            className={`brief-modal__stage ${step === 0 ? "brief-modal__stage--project" : ""}`}
+          >
             {submitted ? (
               <SubmittedView />
             ) : (
@@ -471,7 +531,7 @@ export function BriefModal({
                 <h2
                   id="brief-title"
                   data-stagger
-                  className="brief-modal__title"
+                  className={`brief-modal__title ${step === 0 ? "brief-modal__title--project" : ""}`}
                 >
                   <span>{stepMeta.head} </span>
                   <span className="italic font-normal text-foreground/90">
@@ -481,7 +541,7 @@ export function BriefModal({
 
                 {step === 0 && (
                   <ul
-                    className="brief-list"
+                    className="brief-list brief-list--project"
                     onMouseLeave={() => setFocusIdx(-1)}
                   >
                     {PROJECT_TYPES.map((p, i) => (
@@ -505,7 +565,7 @@ export function BriefModal({
                     className="brief-list"
                     onMouseLeave={() => setFocusIdx(-1)}
                   >
-                    {BUDGETS.map((b, i) => (
+                    {currentBudgetOptions.map((b, i) => (
                       <li key={b.id} data-stagger>
                         <BriefOption
                           index={i + 1}
@@ -629,7 +689,7 @@ export function BriefModal({
                   ? "Sending your brief…"
                   : step === 2
                     ? "Return, or send when ready"
-                    : "Select with 1–5, or return with Esc"}
+                        : `Select with 1-${shortcutMax}, or return with Esc`}
             </span>
             <span className="brief-modal__count">
               {submitted
