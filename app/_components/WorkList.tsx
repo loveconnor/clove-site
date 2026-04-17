@@ -129,7 +129,7 @@ export function WorkList() {
           viewport so only one row is visible at a time. Scroll snap
           cleanly pages between rows. */}
       {view === "grid" && (
-        <ul className="work-grid flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1 md:gap-4">
+        <ul className="work-grid flex flex-col gap-3 pr-1 md:min-h-0 md:flex-1 md:overflow-y-auto md:gap-4">
           {Array.from({ length: Math.ceil(CLIENTS.length / 2) }).map(
             (_, rowIdx) => {
               const rowClients = CLIENTS.slice(rowIdx * 2, rowIdx * 2 + 2);

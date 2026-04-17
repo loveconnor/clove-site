@@ -259,17 +259,17 @@ body {
    column of row pairs, each pair `h-full shrink-0`, so only one row
    is visible at a time. Scroll-snap pages cleanly between rows. */
 .work-grid {
-  scroll-snap-type: y proximity;
+  scroll-snap-type: none;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
-  overscroll-behavior-y: contain;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
 }
 
 @media (min-width: 768px) {
   .work-grid {
     scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
 }
 

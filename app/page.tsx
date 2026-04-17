@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <div className="grain" aria-hidden />
-      <div className="flex h-svh flex-col overflow-hidden">
+      <div className="flex min-h-svh flex-col md:h-svh md:overflow-hidden">
         <TopBar />
         <main className="flex min-h-0 flex-1 flex-col">
           <FillSlot />
