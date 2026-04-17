@@ -1,7 +1,7 @@
 const SOCIALS: ReadonlyArray<{ label: string; href: string }> = [
-  { label: "X", href: "https://x.com/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/" },
-  { label: "Behance", href: "https://www.behance.net/" },
+  { label: "X", href: "https://x.com/cando145" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/loveconnor/" },
+  { label: "Behance", href: "https://www.behance.net/connorlove" },
 ];
 
 export function FooterStrip() {

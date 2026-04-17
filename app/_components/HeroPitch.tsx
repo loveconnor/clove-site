@@ -1,4 +1,6 @@
 export function HeroPitch() {
+  const bookingQuarterLabel = getBookingQuarterLabel();
+
   return (
     <div className="flex flex-col gap-6 md:gap-8">
       <div
@@ -43,10 +45,21 @@ export function HeroPitch() {
         style={{ ["--delay" as string]: "620ms" }}
       >
         <span className="pulse-dot text-emerald-400" aria-hidden />
-        <span>Booking Q3 ’26 — taking on two per quarter</span>
+        <span>{`Booking ${bookingQuarterLabel} — taking on two per quarter`}</span>
       </div>
     </div>
   );
+}
+
+function getBookingQuarterLabel(date = new Date()): string {
+  const month = date.getMonth();
+  const currentQuarter = Math.floor(month / 3) + 1;
+
+  const nextQuarter = currentQuarter === 4 ? 1 : currentQuarter + 1;
+  const year = date.getFullYear() + (currentQuarter === 4 ? 1 : 0);
+  const shortYear = String(year).slice(-2);
+
+  return `Q${nextQuarter} ’${shortYear}`;
 }
 
 function Line({
