@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" width="600" height="120">
+  <defs>
+    <g id="clove-petal-set" fill="#ffffff" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M 5 -5 Q 22 -2 38 -5 A 33 33 0 0 0 5 -38 Q 2 -22 5 -5 Z" />
+      <path d="M 5 5 Q 22 2 38 5 A 33 33 0 0 1 5 38 Q 2 22 5 5 Z" />
+      <path d="M -5 5 Q -22 2 -38 5 A 33 33 0 0 0 -5 38 Q -2 22 -5 5 Z" />
+      <path d="M -5 -5 Q -22 -2 -38 -5 A 33 33 0 0 1 -5 -38 Q -2 -22 -5 -5 Z" />
+    </g>
+  </defs>
+  <use href="#clove-petal-set" transform="translate(60, 60)" />
+  <use href="#clove-petal-set" transform="translate(180, 60)" />
+  <use href="#clove-petal-set" transform="translate(300, 60)" />
+  <use href="#clove-petal-set" transform="translate(420, 60)" />
+  <use href="#clove-petal-set" transform="translate(540, 60)" />
+</svg>
