@@ -10,7 +10,15 @@ export function HeroPitch() {
           style={{ ["--delay" as string]: "240ms" }}
           aria-hidden
         />
-        <span>A studio by Connor Love</span>
+        <span>A studio by </span>
+        <a
+          href="https://connorlove.com"
+          target="_blank"
+          rel="noreferrer"
+          className="transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline-none"
+        >
+          Connor Love
+        </a>
       </div>
 
       <h1

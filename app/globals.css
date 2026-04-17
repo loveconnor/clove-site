@@ -750,7 +750,7 @@ body {
   font-family: var(--font-love-sans), ui-sans-serif, sans-serif;
   font-size: 12.5px;
   line-height: 1.5;
-  color: var(--muted);
+  color: rgba(242, 242, 240, 0.68);
   min-width: 0;
   max-width: 60ch;
   transition: color 320ms var(--option-ease);
@@ -764,7 +764,7 @@ body {
 
 .brief-option:hover .brief-option__desc,
 .brief-option[data-focused="true"] .brief-option__desc {
-  color: rgba(242, 242, 240, 0.72);
+  color: rgba(242, 242, 240, 0.78);
 }
 
 /* Minimal affordance — the arrow is invisible until hover/focus. */
