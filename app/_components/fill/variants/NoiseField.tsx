@@ -109,17 +109,22 @@ void main() {
   // spacing (0.125). Slight enough that the contour lines keep passing through
   // the letters — so every glyph reads as "see-through" with displaced
   // isolines — but clear enough to make CLOVE recognizable.
-  float engraved = n - letter * 0.16;
+  float engraved = n - letter * 0.18;
 
   // Cursor proximity (aspect-corrected).
   vec2 md = vec2((u_mouse.x - 0.5) * aspect, u_mouse.y - 0.5) * 2.0;
   float proximity = length(p - md);
   float spotlight = smoothstep(1.4, 0.0, proximity);
 
-  // Base ambient luminance — very dim, just so edges aren't pitch black.
+  // Base ambient luminance. Keep the field dark and let the word read mostly
+  // through engraved depth plus a gentle contour response, not a flat fill.
   // Clamp before pow() so negative elevations (possible after engraving) don't
   // feed pow() an undefined value.
-  float base = pow(max(engraved, 0.0), 1.2) * 0.045;
+  float base = pow(max(engraved, 0.0), 1.22) * 0.048;
+  float letterCore = smoothstep(0.22, 0.78, letter);
+  float letterRim =
+    smoothstep(0.06, 0.3, letter) -
+    smoothstep(0.5, 0.86, letter);
 
   // Topographic contours at 8 drifting isovalues. The word is NOT drawn as its
   // own edge pass — it appears only through how these same contour lines
@@ -131,12 +136,11 @@ void main() {
     float d = abs(engraved - level);
     contours += smoothstep(0.012, 0.0, d);
   }
-  // Ambient letter lift keeps the word clearly visible at rest; the spotlight
-  // term amplifies everything on hover, and the spotlight*letter term pushes
-  // the word further forward specifically when the cursor is near it.
-  contours *= (0.62 + letter * 1.25 + spotlight * 0.45 + spotlight * letter * 2.6);
+  // A restrained resting boost on the edges and interior keeps the engraving
+  // visible without turning the word into a flat highlighted slab.
+  contours *= (0.66 + letterRim * 0.95 + letterCore * 0.28 + spotlight * 0.42 + spotlight * letterCore * 2.45);
 
-  float v = base + contours * 0.55;
+  float v = base + letterRim * 0.028 + contours * 0.57;
 
   vec3 col = vec3(v) * vec3(0.985, 0.98, 0.96);
   gl_FragColor = vec4(col, 1.0);
