@@ -89,27 +89,32 @@ void main() {
   );
   float n = fbm(p + r * 1.4);
 
-  // Warp the letter-sampling UV by the same noise vectors that domain-warp the
-  // terrain, so the displaced region breathes with the field instead of
-  // reading as a clean geometric cutout.
+  // Keep most of the field motion, but preserve a more stable letter
+  // silhouette underneath so narrow strokes like the L do not collapse.
   vec2 warp = (r - 0.5) * 0.028 + (q - 0.5) * 0.018;
   vec2 letterUV = uv + warp;
+  vec2 stableLetterUV = uv + warp * 0.35;
 
   // Small 5-tap blur on the letter mask so the elevation transition at letter
   // edges is gradual — prevents contour lines from bunching into an outline.
   float b = 0.0022;
-  float letter =
+  float warpedLetter =
     sampleLetters(letterUV) * 0.4 +
     sampleLetters(letterUV + vec2(b, 0.0)) * 0.15 +
     sampleLetters(letterUV + vec2(-b, 0.0)) * 0.15 +
     sampleLetters(letterUV + vec2(0.0, b)) * 0.15 +
     sampleLetters(letterUV + vec2(0.0, -b)) * 0.15;
+  float stableLetter =
+    sampleLetters(stableLetterUV) * 0.4 +
+    sampleLetters(stableLetterUV + vec2(b, 0.0)) * 0.15 +
+    sampleLetters(stableLetterUV + vec2(-b, 0.0)) * 0.15 +
+    sampleLetters(stableLetterUV + vec2(0.0, b)) * 0.15 +
+    sampleLetters(stableLetterUV + vec2(0.0, -b)) * 0.15;
+  float letter = mix(warpedLetter, stableLetter, 0.45);
 
-  // Recess the letterforms into the terrain by a little more than one contour
-  // spacing (0.125). Slight enough that the contour lines keep passing through
-  // the letters — so every glyph reads as "see-through" with displaced
-  // isolines — but clear enough to make CLOVE recognizable.
-  float engraved = n - letter * 0.18;
+  // Recess the letterforms a bit more aggressively so the word has a stable
+  // silhouette even before the hover light passes over it.
+  float engraved = n - letter * 0.28;
 
   // Cursor proximity (aspect-corrected).
   vec2 md = vec2((u_mouse.x - 0.5) * aspect, u_mouse.y - 0.5) * 2.0;
@@ -125,6 +130,12 @@ void main() {
   float letterRim =
     smoothstep(0.06, 0.3, letter) -
     smoothstep(0.5, 0.86, letter);
+  float letterEdge =
+    smoothstep(0.08, 0.24, letter) -
+    smoothstep(0.34, 0.56, letter);
+  float letterInner =
+    smoothstep(0.3, 0.72, letter) *
+    (1.0 - smoothstep(0.82, 0.98, letter));
 
   // Topographic contours at 8 drifting isovalues. The word is NOT drawn as its
   // own edge pass — it appears only through how these same contour lines
@@ -136,11 +147,16 @@ void main() {
     float d = abs(engraved - level);
     contours += smoothstep(0.012, 0.0, d);
   }
-  // A restrained resting boost on the edges and interior keeps the engraving
-  // visible without turning the word into a flat highlighted slab.
-  contours *= (0.66 + letterRim * 0.95 + letterCore * 0.28 + spotlight * 0.42 + spotlight * letterCore * 2.45);
+  // Stronger contour response around the letters keeps the carving visible in
+  // motion and at rest.
+  contours *= (0.92 + letterRim * 1.3 + letterCore * 0.62 + spotlight * 0.55 + spotlight * letterCore * 2.9);
 
-  float v = base + letterRim * 0.028 + contours * 0.57;
+  // Build a readable engraved form: dark interior body, brighter rim, then a
+  // stronger spotlight reveal on hover.
+  float carvedShadow = letterCore * 0.09 + letterInner * 0.12;
+  float idleReveal = letterEdge * 0.11 + letterRim * 0.05;
+  float hoverReveal = spotlight * (letterCore * 0.085 + letterEdge * 0.12);
+  float v = max(base - carvedShadow, 0.0) + idleReveal + hoverReveal + contours * 0.74;
 
   vec3 col = vec3(v) * vec3(0.985, 0.98, 0.96);
   gl_FragColor = vec4(col, 1.0);

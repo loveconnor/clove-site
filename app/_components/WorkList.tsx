@@ -97,14 +97,14 @@ export function WorkList() {
                   onPointerEnter={(e) => handleRowEnter(e, i)}
                   onPointerMove={handleRowMove}
                   onPointerLeave={handleRowLeave}
-                  className="group grid grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-4 border-b border-transparent py-2 font-display text-[14px] font-normal tracking-[-0.005em] text-foreground/55 transition-[color,border-color] duration-300 hover:border-foreground/45 hover:text-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-foreground md:gap-5 md:py-2.5 md:text-[15px]"
+                  className="work-row group grid grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-4 py-2 font-display text-[14px] font-normal tracking-[-0.005em] text-foreground/55 transition-colors duration-300 hover:text-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-foreground md:gap-5 md:py-2.5 md:text-[15px]"
                   style={{ ["--delay" as string]: `${delay}ms` }}
                 >
                   <span
-                    className="reveal-fade truncate text-foreground/90 group-hover:text-foreground"
+                    className="reveal-fade text-foreground/90 group-hover:text-foreground"
                     style={{ ["--delay" as string]: `${delay}ms` }}
                   >
-                    {client.name}
+                    <span className="work-row-name truncate">{client.name}</span>
                   </span>
                   <span
                     className="reveal-fade truncate text-foreground/55 group-hover:text-foreground/85"

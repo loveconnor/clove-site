@@ -11,6 +11,7 @@ export type BriefPayload = {
   company: string;
   email: string;
   location: string;
+  timeline: string;
   material: string;
   description: string;
   submittedAt: string; // ISO
@@ -68,6 +69,7 @@ export function renderBriefEmailHtml(payload: BriefPayload) {
     company,
     email,
     location,
+    timeline,
     material,
     description,
     submittedAt,
@@ -80,6 +82,7 @@ export function renderBriefEmailHtml(payload: BriefPayload) {
     { label: "Company", value: company || "—" },
     { label: "Email", value: email, link: true },
     { label: "Location", value: location || "—" },
+    { label: "Timeline", value: timeline || "—" },
     {
       label: "Material",
       value: material || "—",
@@ -227,7 +230,18 @@ export function renderBriefEmailHtml(payload: BriefPayload) {
 }
 
 export function renderBriefEmailText(payload: BriefPayload) {
-  const { projectType, budget, name, company, email, location, material, description, submittedAt } = payload;
+  const {
+    projectType,
+    budget,
+    name,
+    company,
+    email,
+    location,
+    timeline,
+    material,
+    description,
+    submittedAt,
+  } = payload;
 
   return [
     "New brief received",
@@ -241,6 +255,7 @@ export function renderBriefEmailText(payload: BriefPayload) {
     `Company:  ${company || "—"}`,
     `Email:    ${email}`,
     `Location: ${location || "—"}`,
+    `Timeline: ${timeline || "—"}`,
     `Material: ${material || "—"}`,
     "",
     "Project description",

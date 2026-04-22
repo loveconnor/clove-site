@@ -19,6 +19,7 @@ const MAX_LEN: Record<keyof BriefPayload, number> = {
   company: 160,
   email: 200,
   location: 160,
+  timeline: 120,
   material: 500,
   description: 5000,
   submittedAt: 64,
@@ -51,6 +52,7 @@ export async function POST(request: Request) {
     company: clean(body.company, MAX_LEN.company),
     email: clean(body.email, MAX_LEN.email),
     location: clean(body.location, MAX_LEN.location),
+    timeline: clean(body.timeline, MAX_LEN.timeline),
     material: clean(body.material, MAX_LEN.material),
     description: clean(body.description, MAX_LEN.description),
     submittedAt: new Date().toISOString(),
@@ -61,6 +63,7 @@ export async function POST(request: Request) {
   if (!payload.budget) missing.push("budget");
   if (!payload.name) missing.push("name");
   if (!payload.email) missing.push("email");
+  if (!payload.timeline) missing.push("timeline");
   if (!payload.description) missing.push("description");
   if (missing.length > 0) {
     return Response.json(

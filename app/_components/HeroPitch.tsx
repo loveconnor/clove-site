@@ -1,6 +1,4 @@
 export function HeroPitch() {
-  const bookingQuarterLabel = getBookingQuarterLabel();
-
   return (
     <div className="flex flex-col gap-6 md:gap-8">
       <div
@@ -30,7 +28,7 @@ export function HeroPitch() {
         <Line delay={220}>Considered</Line>
         <Line delay={300}>
           <span className="italic font-normal text-foreground/85">
-            web development
+            product development
           </span>
         </Line>
         <Line delay={380}>for founders who</Line>
@@ -40,26 +38,21 @@ export function HeroPitch() {
         </Line>
       </h1>
 
-      <div
-        className="reveal-fade flex items-center gap-3 pt-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted"
-        style={{ ["--delay" as string]: "620ms" }}
+      <p
+        className="reveal-fade max-w-[42ch] text-sm leading-relaxed text-foreground/68 md:text-[0.95rem]"
+        style={{ ["--delay" as string]: "560ms" }}
       >
-        <span className="pulse-dot text-emerald-400" aria-hidden />
-        <span>{`Booking ${bookingQuarterLabel} — taking on two per quarter`}</span>
-      </div>
+        Custom websites and platforms designed to perform, scale, and convert.
+      </p>
+
+      <p
+        className="reveal-fade font-mono text-[10.5px] uppercase tracking-[0.2em] text-foreground/38"
+        style={{ ["--delay" as string]: "600ms" }}
+      >
+        For startups and product teams
+      </p>
     </div>
   );
-}
-
-function getBookingQuarterLabel(date = new Date()): string {
-  const month = date.getMonth();
-  const currentQuarter = Math.floor(month / 3) + 1;
-
-  const nextQuarter = currentQuarter === 4 ? 1 : currentQuarter + 1;
-  const year = date.getFullYear() + (currentQuarter === 4 ? 1 : 0);
-  const shortYear = String(year).slice(-2);
-
-  return `Q${nextQuarter} ’${shortYear}`;
 }
 
 function Line({

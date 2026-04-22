@@ -26,8 +26,8 @@ export const CLIENTS: Client[] = [
   },
   {
     index: "003",
-    name: "Portfolio",
-    category: "Frontend",
+    name: "Connor Love",
+    category: "Product Marketing",
     role: "2026",
     preview: "/portfolio.png",
     href: "https://connorlove.com",

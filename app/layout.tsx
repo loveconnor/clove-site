@@ -60,13 +60,13 @@ const loveSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "clove — creative development studio",
+  title: "clove — product engineering studio",
   description:
-    "Creative development studio building considered web experiences for founders who sweat the details.",
+    "Product engineering studio building high-performance websites, platforms, and systems that convert, scale, and ship fast.",
   openGraph: {
-    title: "clove — creative development studio",
+    title: "clove — product engineering studio",
     description:
-      "Creative development studio building considered web experiences for founders who sweat the details.",
+      "Product engineering studio building high-performance websites, platforms, and systems that convert, scale, and ship fast.",
     type: "website",
   },
 };

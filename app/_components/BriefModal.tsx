@@ -24,86 +24,159 @@ type BudgetOption = {
   hint: string;
 };
 
+type BudgetStepCopy = {
+  title: string;
+  intro: string;
+  reassurance: string;
+};
+
 const PROJECT_TYPES: ProjectType[] = [
   {
     id: "landing",
-    title: "Landing Page",
+    title: "Launch / Landing",
     description:
-      "High-impact, single-page sites built to convert for product launches, waitlists, or specific campaigns.",
+      "High-conversion launch pages for product rollouts, waitlists, and early traction.",
   },
   {
     id: "marketing",
     title: "Marketing Site",
     description:
-      "Multi-page websites designed to clearly explain your product, build brand trust, and capture leads.",
+      "Structured marketing sites that position your product clearly, build trust, and drive acquisition.",
   },
   {
     id: "webapp",
-    title: "Web App / Platform",
+    title: "Product / Platform",
     description:
-      "Custom software, SaaS interfaces, user dashboards, and interactive digital products.",
-  },
-  {
-    id: "portfolio",
-    title: "Portfolio / Editorial",
-    description:
-      "Highly visual, interaction-heavy sites to showcase case studies, creative work, or digital lookbooks.",
+      "Custom products, dashboards, and systems built around your business logic and ready to scale.",
   },
   {
     id: "retainer",
-    title: "Retained Partnership",
+    title: "Monthly Retainer",
     description:
-      "Ongoing, fractional design and development for continuous iteration and scaling teams.",
+      "Flat monthly product design and engineering support for teams that need consistent shipping capacity.",
   },
   {
     id: "other",
-    title: "Other",
+    title: "Something Else",
     description:
-      "Something else. Tell us more on the final step.",
+      "If your project doesn’t fit neatly into a category, we’ll define it together.",
   },
 ];
 
 const BUDGETS_BY_PROJECT: Record<string, BudgetOption[]> = {
   landing: [
-    { id: "landing-tier-1", label: "$2,500 — $4,000", hint: "Standard waitlist or launch page" },
-    { id: "landing-tier-2", label: "$4,000 — $7,000", hint: "Interactive & animation-heavy" },
-    { id: "landing-tier-3", label: "$7,000 — $10,000", hint: "Complex integrations or multi-variant" },
-    { id: "landing-tier-4", label: "$10,000+", hint: "Bespoke 3D / WebGL experiences" },
+    {
+      id: "landing-tier-1",
+      label: "$5,000 — $8,000",
+      hint: "High-quality launch or waitlist page",
+    },
+    {
+      id: "landing-tier-2",
+      label: "$8,000 — $12,000",
+      hint: "Conversion-focused with custom interactions",
+    },
+    {
+      id: "landing-tier-3",
+      label: "$12,000 — $18,000",
+      hint: "Advanced flows, motion, and integrations",
+    },
+    {
+      id: "landing-tier-4",
+      label: "$18,000+",
+      hint: "Highly bespoke / immersive experiences",
+    },
   ],
-  
+
   marketing: [
-    { id: "marketing-tier-1", label: "$5,000 — $8,000", hint: "Essential pages (1-4 pages)" },
-    { id: "marketing-tier-2", label: "$8,000 — $15,000", hint: "CMS-driven & fully scalable" },
-    { id: "marketing-tier-3", label: "$15,000 — $25,000", hint: "Large-scale / bespoke interactions" },
-    { id: "marketing-tier-4", label: "$25,000+", hint: "Enterprise architecture / multi-region" },
+    {
+      id: "marketing-tier-1",
+      label: "$8,000 — $15,000",
+      hint: "Typical for a focused product marketing site",
+    },
+    {
+      id: "marketing-tier-2",
+      label: "$15,000 — $25,000",
+      hint: "Typical for scalable CMS builds and stronger conversion systems",
+    },
+    {
+      id: "marketing-tier-3",
+      label: "$25,000 — $40,000",
+      hint: "Typical for advanced interactions and deeper product storytelling",
+    },
+    {
+      id: "marketing-tier-4",
+      label: "$40,000+",
+      hint: "Typical for a large-scale product marketing system",
+    },
   ],
-  
+
   webapp: [
-    { id: "webapp-tier-1", label: "$10,000 — $15,000", hint: "Core MVP & foundational UX" },
-    { id: "webapp-tier-2", label: "$15,000 — $30,000", hint: "Complex logic & custom dashboards" },
-    { id: "webapp-tier-3", label: "$30,000 — $50,000", hint: "Enterprise scale / heavy API architecture" },
-    { id: "webapp-tier-4", label: "$50,000+", hint: "Multi-quarter engagement & rollout" },
-  ],
-  
-  portfolio: [
-    { id: "portfolio-tier-1", label: "$3,000 — $6,000", hint: "Clean, minimalist gallery" },
-    { id: "portfolio-tier-2", label: "$6,000 — $10,000", hint: "Award-winning interactions" },
-    { id: "portfolio-tier-3", label: "$10,000 — $15,000", hint: "Immersive editorial platform" },
-    { id: "portfolio-tier-4", label: "$15,000+", hint: "Highly experimental / WebGL focused" },
+    {
+      id: "webapp-tier-1",
+      label: "$15,000 — $25,000",
+      hint: "MVP with core product functionality",
+    },
+    {
+      id: "webapp-tier-2",
+      label: "$25,000 — $50,000",
+      hint: "Custom dashboards, workflows, and integrations",
+    },
+    {
+      id: "webapp-tier-3",
+      label: "$50,000 — $80,000",
+      hint: "Scalable architecture and complex systems",
+    },
+    {
+      id: "webapp-tier-4",
+      label: "$80,000+",
+      hint: "Multi-phase product development & rollout",
+    },
   ],
 
   retainer: [
-    { id: "retainer-tier-1", label: "$1,500 — $3,000 / mo", hint: "Maintenance & iterative improvements" },
-    { id: "retainer-tier-2", label: "$3,000 — $5,000 / mo", hint: "Dedicated feature sprints" },
-    { id: "retainer-tier-3", label: "$5,000 — $8,000 / mo", hint: "Fractional engineering support" },
-    { id: "retainer-tier-4", label: "$8,000+ / mo", hint: "Half-time embedded technical partner" },
+    {
+      id: "retainer-tier-1",
+      label: "$2,000 — $4,000 / mo",
+      hint: "Ongoing improvements & small features",
+    },
+    {
+      id: "retainer-tier-2",
+      label: "$4,000 — $7,000 / mo",
+      hint: "Consistent feature development",
+    },
+    {
+      id: "retainer-tier-3",
+      label: "$7,000 — $12,000 / mo",
+      hint: "Dedicated product engineering support",
+    },
+    {
+      id: "retainer-tier-4",
+      label: "$12,000+ / mo",
+      hint: "Embedded technical partner",
+    },
   ],
-  
+
   other: [
-    { id: "other-tier-1", label: "$2,500 — $5,000", hint: "Small scoped engagement" },
-    { id: "other-tier-2", label: "$5,000 — $10,000", hint: "Standard bespoke project" },
-    { id: "other-tier-3", label: "$10,000 — $20,000", hint: "Advanced custom requirements" },
-    { id: "other-tier-4", label: "$20,000+", hint: "Extensive platform architecture" },
+    {
+      id: "other-tier-1",
+      label: "$5,000 — $10,000",
+      hint: "Smaller scoped engagement",
+    },
+    {
+      id: "other-tier-2",
+      label: "$10,000 — $20,000",
+      hint: "Custom-defined project",
+    },
+    {
+      id: "other-tier-3",
+      label: "$20,000 — $40,000",
+      hint: "Advanced technical requirements",
+    },
+    {
+      id: "other-tier-4",
+      label: "$40,000+",
+      hint: "Large-scale or undefined scope",
+    },
   ],
 };
 
@@ -116,6 +189,7 @@ type FormData = {
   company: string;
   email: string;
   location: string;
+  timeline: string;
   material: string;
   description: string;
 };
@@ -125,15 +199,49 @@ const EMPTY_FORM: FormData = {
   company: "",
   email: "",
   location: "",
+  timeline: "",
   material: "",
   description: "",
 };
 
 const STEP_TITLES: Array<{ eyebrow: string; head: string; italic: string }> = [
   { eyebrow: "01 · Project", head: "Hey there…", italic: "what will we build?" },
-  { eyebrow: "02 · Budget", head: "How much is", italic: "your budget?" },
+  { eyebrow: "02 · Budget", head: "Estimated project", italic: "investment" },
   { eyebrow: "03 · Details", head: "A few more", italic: "details." },
 ];
+
+const BUDGET_STEP_COPY_BY_PROJECT: Record<string, BudgetStepCopy> = {
+  landing: {
+    title: "Estimated project investment",
+    intro: "Most launch projects typically fall between $5k-$18k depending on scope.",
+    reassurance:
+      "This helps us understand scope. Final pricing is confirmed after we review your project.",
+  },
+  marketing: {
+    title: "Estimated project investment",
+    intro: "Most marketing site projects typically fall between $8k-$30k depending on scope.",
+    reassurance:
+      "This helps us understand scope. Final pricing is confirmed after we review your project.",
+  },
+  webapp: {
+    title: "Estimated project investment",
+    intro: "Most product builds typically start around $15k and scale with complexity.",
+    reassurance:
+      "This helps us understand scope. Final pricing is confirmed after we review your project.",
+  },
+  retainer: {
+    title: "Estimated monthly investment",
+    intro: "Most ongoing engagements typically fall between $4k-$12k per month depending on scope.",
+    reassurance:
+      "This helps us understand the level of support you need. Final pricing is confirmed after review.",
+  },
+  other: {
+    title: "Estimated project investment",
+    intro: "Most custom projects typically fall between $8k-$30k depending on scope.",
+    reassurance:
+      "This helps us understand scope. Final pricing is confirmed after we review your project.",
+  },
+};
 
 export function BriefModal({
   open,
@@ -358,7 +466,6 @@ export function BriefModal({
 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, step, focusIdx, submitted, projectType]);
 
   // Reset focus index when step changes (nothing pre-highlighted).
@@ -371,6 +478,14 @@ export function BriefModal({
   const currentBudgetOptions = useMemo(() => {
     if (!projectType) return BUDGETS_BY_PROJECT.other;
     return BUDGETS_BY_PROJECT[projectType] ?? BUDGETS_BY_PROJECT.other;
+  }, [projectType]);
+
+  const budgetStepCopy = useMemo(() => {
+    if (!projectType) return BUDGET_STEP_COPY_BY_PROJECT.other;
+    return (
+      BUDGET_STEP_COPY_BY_PROJECT[projectType] ??
+      BUDGET_STEP_COPY_BY_PROJECT.other
+    );
   }, [projectType]);
 
   const shortcutMax = step === 0 ? PROJECT_TYPES.length : currentBudgetOptions.length;
@@ -429,6 +544,7 @@ export function BriefModal({
           company: form.company,
           email: form.email,
           location: form.location,
+          timeline: form.timeline,
           material: form.material,
           description: form.description,
         }),
@@ -535,11 +651,23 @@ export function BriefModal({
                   data-stagger
                   className={`brief-modal__title ${step === 0 ? "brief-modal__title--project" : ""}`}
                 >
-                  <span>{stepMeta.head} </span>
-                  <span className="italic font-normal text-foreground/90">
-                    {stepMeta.italic}
-                  </span>
+                  {step === 1 ? (
+                    <span>{budgetStepCopy.title}</span>
+                  ) : (
+                    <>
+                      <span>{stepMeta.head} </span>
+                      <span className="italic font-normal text-foreground/90">
+                        {stepMeta.italic}
+                      </span>
+                    </>
+                  )}
                 </h2>
+
+                {step === 2 && (
+                  <p data-stagger className="brief-ownership-note">
+                    Full source code and IP ownership transfer on completion.
+                  </p>
+                )}
 
                 {step === 0 && (
                   <ul
@@ -563,24 +691,35 @@ export function BriefModal({
                 )}
 
                 {step === 1 && (
-                  <ul
-                    className="brief-list"
-                    onMouseLeave={() => setFocusIdx(-1)}
-                  >
-                    {currentBudgetOptions.map((b, i) => (
-                      <li key={b.id} data-stagger>
-                        <BriefOption
-                          index={i + 1}
-                          title={b.label}
-                          hint={b.hint}
-                          selected={budget === b.id}
-                          focused={focusIdx === i}
-                          onSelect={() => handleSelectBudget(b.id)}
-                          onHover={() => setFocusIdx(i)}
-                        />
-                      </li>
-                    ))}
-                  </ul>
+                  <>
+                    <div data-stagger className="brief-budget-copy">
+                      <p className="brief-budget-copy__intro">
+                        {budgetStepCopy.intro}
+                      </p>
+                      <p className="brief-budget-copy__reassurance">
+                        {budgetStepCopy.reassurance}
+                      </p>
+                    </div>
+
+                    <ul
+                      className="brief-list"
+                      onMouseLeave={() => setFocusIdx(-1)}
+                    >
+                      {currentBudgetOptions.map((b, i) => (
+                        <li key={b.id} data-stagger>
+                          <BriefOption
+                            index={i + 1}
+                            title={b.label}
+                            hint={b.hint}
+                            selected={budget === b.id}
+                            focused={focusIdx === i}
+                            onSelect={() => handleSelectBudget(b.id)}
+                            onHover={() => setFocusIdx(i)}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </>
                 )}
 
                 {step === 2 && (
@@ -624,15 +763,25 @@ export function BriefModal({
                       />
                     </div>
 
-                    <FormRow
-                      label="Material"
-                      value={form.material}
-                      onChange={(v) =>
-                        setForm((f) => ({ ...f, material: v }))
-                      }
-                      placeholder="Link to Figma, deck, brief, etc."
-                      stagger
-                    />
+                    <div data-stagger className="brief-form__pair">
+                      <FormRow
+                        label="Timeline"
+                        value={form.timeline}
+                        onChange={(v) =>
+                          setForm((f) => ({ ...f, timeline: v }))
+                        }
+                        placeholder="ASAP, Q3 2026, by October, etc."
+                        required
+                      />
+                      <FormRow
+                        label="Material"
+                        value={form.material}
+                        onChange={(v) =>
+                          setForm((f) => ({ ...f, material: v }))
+                        }
+                        placeholder="Link to Figma, deck, brief, etc."
+                      />
+                    </div>
 
                     <label data-stagger className="brief-field brief-field--textarea">
                       <span className="brief-field__label">Project</span>

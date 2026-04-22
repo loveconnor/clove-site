@@ -252,6 +252,36 @@ body {
   transform: translateY(var(--ty)) scale(1);
 }
 
+.work-row {
+  cursor: pointer;
+}
+
+.work-row-name {
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+  vertical-align: top;
+}
+
+.work-row-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 650ms cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+}
+
+.work-row:hover .work-row-name::after,
+.work-row:focus-visible .work-row-name::after {
+  transform: scaleX(1);
+}
+
 /* ---- Grid view internal scroll ----
    The WorkList wrapper has a fixed desktop height; the grid fills the
    remaining space and scrolls internally so swapping list⇄grid never
@@ -486,6 +516,38 @@ body {
   max-width: 24ch;
 }
 
+.brief-budget-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  max-width: 56ch;
+}
+
+.brief-budget-copy__intro,
+.brief-budget-copy__reassurance {
+  margin: 0;
+  font-family: var(--font-love-sans), ui-sans-serif, sans-serif;
+  letter-spacing: -0.005em;
+}
+
+.brief-budget-copy__intro {
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(242, 242, 240, 0.84);
+}
+
+.brief-budget-copy__reassurance {
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(242, 242, 240, 0.62);
+}
+
+@media (min-width: 768px) {
+  .brief-budget-copy__intro {
+    font-size: 14.5px;
+  }
+}
+
 .brief-list {
   display: flex;
   flex-direction: column;
@@ -632,6 +694,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+}
+
+@media (min-width: 768px) {
+  .brief-form {
+    gap: 0.35rem;
+  }
 }
 
 .brief-form__pair {
@@ -865,9 +933,9 @@ body {
 @media (min-width: 768px) {
   .brief-field {
     grid-template-columns: 100px minmax(0, 1fr);
-    gap: 1.25rem;
-    padding: 0.75rem 1.6rem;
-    height: 54px;
+    gap: 1.15rem;
+    padding: 0.7rem 1.45rem;
+    height: 50px;
   }
 }
 
@@ -888,8 +956,8 @@ body {
 
 @media (min-width: 768px) {
   .brief-field--textarea {
-    padding: 0.9rem 1.6rem 1rem;
-    min-height: 116px;
+    padding: 0.8rem 1.45rem 0.9rem;
+    min-height: 96px;
   }
 }
 
@@ -934,12 +1002,35 @@ body {
   padding: 0;
 }
 
+@media (min-width: 768px) {
+  .brief-field__input--textarea {
+    min-height: 50px;
+  }
+}
+
 .brief-field__input::placeholder {
   color: rgba(242, 242, 240, 0.3);
 }
 
 .brief-field__input:focus {
   outline: none;
+}
+
+.brief-ownership-note {
+  margin: 0;
+  font-family: var(--font-love-sans), ui-sans-serif, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  color: rgba(242, 242, 240, 0.56);
+  max-width: 42ch;
+}
+
+@media (min-width: 768px) {
+  .brief-ownership-note {
+    margin-top: -1.15rem;
+    font-size: 13.5px;
+  }
 }
 
 /* Text back button (no pill) */
